@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8">
+        <title>Calculator</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- <link rel="stylesheet" href=""> -->
+        <style>
+            .calculator{
+                width:300px;
+                display:flex;
+                flex-direction: column;
+                font-size: 1.5rem;
+                font-family:sans-serif;
+            }
+            .wrapper{
+                display:grid;
+                grid-template-columns: repeat(4, 1fr);
+                grid-template-rows: repeat(5, 1fr);
+                /* border: 2px solid black; */
+                /* border-block: 4px solid rgb(221, 218, 218); */
+                /* grid-auto-rows: minmax(100px, auto); */
+            }
+            .calculator > div{
+                text-align: center;
+                border:4px solid rgb(221, 218, 218);
+                
+            }
+            .wrapper > div{
+                border:2px solid rgb(221, 218, 218);
+                padding:10px;
+            }
+            .header{
+                background-color:rgb(5, 109, 141);
+                color:white;
+            }
+            .display{
+                position: relative;
+                height:70px;
+                text-align: justify;
+                vertical-align: text-bottom;
+                font-size:3rem;
+            }
+            .display span{
+                position: absolute;
+                bottom:0;
+                right:0;
+            }
+
+            .no-0{
+                grid-column: span 2;
+            }
+            .operator{
+                background-color: indianred;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="calculator">
+                <div class="header">CALCULATOR</div>
+                <div class="display"><span></span></div>
+                <div class="wrapper">
+                    <div class="clear button" data-value="clear">AC</div>
+                    <div class="sign button" data-value="sign">+/-</div>
+                    <div class="mod button" data-value="%">%</div>
+                    <div class="operator button" data-value="/">/</div>
+                    <div class="number button" data-value="7">7</div>
+                    <div class="number button" data-value="8">8</div>
+                    <div class="number button" data-value="9">9</div>
+                    <div class="operator button" data-value="*">*</div>
+                    <div class="number button" data-value="4">4</div>
+                    <div class="number button" data-value="5">5</div>
+                    <div class="number button" data-value="6">6</div>
+                    <div class="operator button " data-value="-">-</div>
+                    <div class="number button" data-value="3">3</div>
+                    <div class="number button" data-value="2">2</div>
+                    <div class="number button" data-value="1">1</div>
+                    <div class="operator button" data-value="+">+</div>
+                    <div class="number no-0 button" data-value="0">0</div>
+                    <div class="decimal button" data-value=".">.</div>
+                    <div class="operator button" data-value="=">=</div>
+                </div>
+        </div>
+        <script>
+            var buttons = document.getElementsByClassName("button");
+            var display = document.querySelector('.display > span');
+            console.log(display)
+            var operator = null;
+            var operand1 = 0;
+            var operand2 = null;
+            for(var i=0;i<buttons.length;i++){
+                buttons[i].addEventListener('click', function(){
+                    var value = this.getAttribute('data-value');
+                    console.log("error" + value);
+                    
+                    if(value == '/' || value == '*' || value == '-' || value == '+' || value=='%'){
+                        console.log("coming");
+                        operand1 = parseFloat(display.textContent);
+                        operator = value;
+                        display.innerText = "";
+                    }
+                    else if( value == "="){
+                        operand2 = parseFloat(display.textContent);
+                        display.innerText = eval(operand1 + " " + operator + " " + operand2);  
+                    }
+                    else if(value =="clear"){
+                        display.innerText = "";
+                    }
+                    else if(value=="sign"){
+                        var temp = parseFloat(display.textContent);
+                        display.innerText = eval("-1 * " + temp);
+                    }
+                    else{
+                        display.innerText += value;
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>
